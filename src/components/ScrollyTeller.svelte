@@ -91,11 +91,11 @@
     position: relative;
   }
 
-  .progress-bars {
+  /* .progress-bars {
     position: absolute;
     background: rgba(170, 51, 120, 0.2);
     visibility: visible;
-  }
+  } */
   
   section {
     height: 80vh;
