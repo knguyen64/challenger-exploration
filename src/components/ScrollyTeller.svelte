@@ -78,11 +78,11 @@
 </Scroller>
 
 <style>
-  .background {
+  /* .background {
     width: 100%;
     height: 100%;
     position: relative;
-  }
+  } */
 
   .foreground {
     width: 50%;
