@@ -23,7 +23,7 @@
     });
 
     //Zoom
-    let width = 1000;
+    let width = 564;
     let height = 800;
     let svg;
     let g;
@@ -40,6 +40,7 @@
         d3.select(g).attr("transform", event.transform)
     }
 
+    //Change page
     function changePageForward(){
         if(page != lastPage){
             page++;
@@ -56,25 +57,28 @@
         }
     }
 
-//   $: console.log(mousePosition)
+    $: d3.selectAll("shuttleShape")
+        .style('opacity', "100%")
+        .transition()
+        .style('opacity', "0%")
 
 </script>
   
 <main>
-    <div style="transform:translate(0, 85px)">
+    <div style="">
         {#if page == 0}
             <p>
-                photo 1
+                <i>Effects of cold temperature on the day of the shuttle’s launch.</i>
             </p>
         {/if}
         {#if page == 1}
             <p>
-                photo 2
+                <i>Ice around the Challenger’s rocket boosters and the launch pad.</i>
             </p>
         {/if}
         {#if page == 2}
             <p>
-                photo 3
+                <i>Frozen launch pad controls the morning of the disaster.</i>
             </p>
         {/if}
         <svg
@@ -121,13 +125,13 @@
     <rect {width} {height}/>
     </svg>
     <br/>
-    <div style="transform:translate(0, -85px)">
+    <div id="interactivity" style="">
         <button 
         id="last" 
         type="last" 
         on:click={changePageBackward}
         />
-        <p style="display:inline;"> Page {page+1} </p>
+        <p style="display:inline; padding-left: 5%; padding-right: 5%;  font-size:18px"> Photo {page+1} </p>
         
         <button 
         id="next" 
@@ -142,6 +146,10 @@
 </main>
   
 <style>
+    svg{
+        margin-bottom: 15px;
+        margin-top: 5px;
+    }
     .shuttleShape{
         position: fixed;
     }
@@ -154,7 +162,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* background-color: red; */
         animation: fadein 700ms ease-in-out both;
     }
 
@@ -168,40 +175,54 @@
         opacity: 0%;
     }
 
+    rect:hover{
+        fill: dark gray;
+        opacity: 100%;
+    }
+
     #last{
-        border-top: 100px solid transparent;
-        border-bottom: 100px solid transparent;
-        border-right: 100px solid;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        border-right: 10px solid;
         background: transparent;
         border-left: none;
         cursor: pointer;
         outline: none;
-        scale: 0.1;
+        transform: translateY(-2px);
     }
 
     #last:hover{
-        scale: 0.12;
+        scale: 1.2;
     }
 
     #next{
-        border-top: 100px solid transparent;
-        border-bottom: 100px solid transparent;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
         background: transparent;
-        border-left: 100px solid;
+        border-left: 10px solid;
         cursor: pointer;
         outline: none;
-        scale: 0.1;
         border-right: none;
+        transform: translateY(-2px);
     }
 
     #next:hover{
-        scale: 0.12;
+        scale: 1.2;
+    }
+
+
+    #interactivity{
+        animation: fadein 700ms ease-in-out both;
     }
 
 
     rect:hover{
         fill: light gray;
         opacity: 5%;
+    }
+
+    p{
+        font-size:18px
     }
 
     @keyframes fadein {

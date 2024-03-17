@@ -1,7 +1,6 @@
 <script>
     import { onMount } from "svelte";
     import * as d3 from 'd3';
-    import { fade, fly } from 'svelte/transition'
 
     export let index;
 
@@ -11,7 +10,6 @@
     let boosters = "boosters.png";
     let boostersOring = "boosters_with_oring.png";
 
-    // let oring = "Group_3-removebg-preview 1.png";
 
     onMount(async () => {
         const res = await fetch('o-ring.csv'); 
@@ -20,8 +18,8 @@
     });
 
     //Zoom
-    const width = 1204;
-    const height = 1000;
+    const width = 1288;
+    const height = 2650;
     let svg;
     let g;
 
@@ -39,7 +37,6 @@
         1:[shuttleIdx, boosterIdx],
         2:[boosterIdx, boosterOringIdx],
     }
-    // $: console.log(structures[0][0]);
 
 
     function changePageForward(){
@@ -82,19 +79,6 @@
             .style("opacity", 1)
     }
 
-    // $: d3.select(svg).call(zoom);
-        
-    // var zoom = d3.zoom()
-    //     .translateExtent([[0, 0], [width, height]])
-    //     .scaleExtent([1, 4])
-    //     .extent([[0, 0], [width, height]])
-    //     .on("zoom", zoomed);
-
-    // function zoomed(event) {
-    //     d3.select(g).attr("transform", event.transform)
-    // }
-
-
 </script>
   
 <main>
@@ -133,7 +117,6 @@
         {height}        
         style="opacity: 0"
     />
-
     </g>
     </svg>
     <div id="interactivity" style="transform:translatey(0px)">
@@ -142,7 +125,7 @@
         type="last" 
         on:click={changePageBackward}
         />
-        <p style="display:inline;padding-left: 3%; padding-right: 3%;"> Page {structure + 1}</p>
+        <p style="display:inline;padding-left: 5%; padding-right: 5%; font-size:18px"> {structure + 1}</p>
         
         <button 
         id="next" 
@@ -151,7 +134,6 @@
         />    
     </div>
 
-    <!-- <i style="font-size: 20px">Zoom and pan across the image</i> -->
 </main>
   
 <style>
@@ -159,6 +141,7 @@
         outline-color: black;
         margin-bottom: 15px;
         margin-top: 15px;
+        width: 35%;
     }
     .shuttleShape{
         position: fixed;
@@ -175,7 +158,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        /* background-color: red; */
         animation: fadein 700ms ease-in-out both;
     }
 
@@ -186,7 +168,8 @@
     }
 
     rect{
-        opacity: 0%;
+        opacity: 100%;
+        outline: 2em;
     }
 
     rect:hover{
@@ -202,7 +185,6 @@
         border-left: none;
         cursor: pointer;
         outline: none;
-        /* scale: 0.1; */
         opacity: 20%;
         transform: translateY(-2px);
     }
@@ -218,7 +200,6 @@
         border-left: 10px solid;
         cursor: pointer;
         outline: none;
-        /* scale: 0.1; */
         border-right: none;
         transform: translateY(-2px);
     }

@@ -1,23 +1,16 @@
 <script>
-    import { onMount } from "svelte";
     import * as d3 from 'd3';
-    import { fade, fly } from 'svelte/transition'
+    import { fade } from 'svelte/transition'
 
     export let index;
 
-    let oringData = [];
     let particles = "1348243-9bJ5LfzwGP-high_0004.avif";
-
-    onMount(async () => {
-        const res = await fetch('o-ring.csv'); 
-        const csv = await res.text();
-        oringData = d3.csvParse(csv, d3.autoType)
-    });
+    let astronauts = "astronauts.png"
 </script>
   
 <main>
     {#if index == 0}
-    <div id="video-container" out:fade>
+    <div id="image" out:fade>
         <img 
         src={particles}
         width="100%"
@@ -47,6 +40,13 @@
   
 <style>
     #video-container{
+        width: 100%;
+        box-sizing: border-box;
+        position: absolute;
+        animation: fadein 800ms ease-in-out both;
+    }
+
+    #image{
         width: 100%;
         box-sizing: border-box;
         position: absolute;

@@ -24,8 +24,6 @@
         console.log(mouse_x, mouse_y);
     }
 
-    //animation
-
 </script>
   
 <main>

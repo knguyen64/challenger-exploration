@@ -63,7 +63,6 @@
   
 <style>
     .shuttleShape{
-        /* scale: 0.5;   */
         padding-left: 40px;
         padding-right: 40px;
         padding-bottom: 30px;
@@ -74,14 +73,12 @@
 
     #shuttle-container{
         scale: 0.5;
-        /* translate: 0px 300px; */
         width: 100%;
         position: absolute;
         animation: fadein 1000ms ease-in;
         display: flex; 
         flex-direction: row;
         justify-content: center;
-        /* background-color: rgba(0, 0, 0, 0.2); */
     }
 
     #tooltip {
@@ -94,16 +91,16 @@
     }
 
     #shuttles-0{
-        background-color: rgba(0, 0, 0, 0.12);
+        background-color: #DAEDFB;
     } 
     #shuttles-1{
-        background-color: rgba(0, 0, 0, 0.12);
+        background-color: #DAEDFB;
     }
     #shuttles-2{
-        background-color: rgba(0, 0, 0, 0.12);
+        background-color: #DAEDFB;
     }
     #shuttles-3{
-        background-color: rgba(0, 0, 0, 0.12);
+        background-color: #DAEDFB;
     }
 
     @keyframes fadein {

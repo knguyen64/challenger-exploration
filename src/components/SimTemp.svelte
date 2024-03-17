@@ -60,24 +60,6 @@
   }
 
   // Animation
-
-  // function update() {
-  //   if (exploded == 0){
-  //     d3.selectAll('img')
-  //     .transition()
-  //     // .delay(function(d,i){ return 0.1*i; }) 
-  //     // .duration(3000)
-  //     // .attr('style', "transform: translateY( "+ shuttleX + "px); opacity: 0%")
-  //     // .transition()
-  //     .duration(700)
-  //       .style('transform', "translateY( "+ shuttleX + "px)")
-  //       .transition("opacity")
-  //       .duration(200)
-  //       .style('opacity', "0%")
-  //       state = !state;
-
-  //   }
-  // }
   let shuttle;
   let shuttleX = -200;
   let translated = false;
@@ -118,14 +100,13 @@
     }
   }
 
-  // $: console.log(d3.select('img').transition().style('transform', "translate(0," + 100 + "px)"))
-
 </script>
 
 <main>
   <div id="simulation-wrapper">
     <div id="intro">
-      <p style="margin-block-start: 0em;"><i>Use the slider to select a temperature. Press "Launch" to start the simulation.</i></p>
+      <p style="margin-block-start: 0em; margin-bottom: 5px; font-size: 23px">Investigate the probability of the Challenger launching yourself.</p>
+      <p style="margin-block-start: 0em; font-size: 18px"><i>Use the slider to select a temperature. Press "Launch" to start the simulation.</i></p>
     </div>
     
     <div id="interactivity">
@@ -166,23 +147,13 @@
       {#if infoBool}
         <div id="note" style="color: white; width: 90%">
           <p> Slider Note: <br/> The slider range is based on the temperature history of Cape Canaveral, Florida(where the space shuttle was launched) in 1986.</p>
-          <p> Probability Note: <br/> The probability was calculated using logistic regression.</p>
+          <p> Probability Note: <br/> Probabilities are based on a logistic regression model.</p>
         </div>    
       {/if}
     </div>
 
     <div id="simulation">
-      <!-- {#if state} -->
-        <img class="shuttle" bind:this={shuttle} src={shuttleImage}/>
-      <!-- {:else}
-        <img class="explosion" src={explosionImage} in:fly="{{ y: 0, duration: exploded == 1 ? 1200 : 0 }}" style="opacity:{exploded == 1 ? "100" : "0" }" />
-      {/if} -->
-      <!-- {#if state}
-        <img class="shuttle" src={shuttleImage}/>
-      {:else}
-        <img class="explosion" src={explosionImage}/>
-      {/if} -->
-
+      <img class="shuttle" bind:this={shuttle} src={shuttleImage}/>
   
       <div id="probability">
         <p style="
@@ -204,10 +175,12 @@
     text-align: center;
     background-color: white;
   }
+
   #info:hover{
     fill: gray;
     opacity: 0.7;
   }
+
   input[type="range"][orient=vertical]{
     width: 150px; 
     accent-color: red;
@@ -240,6 +213,11 @@
     transform: scale(1.2);
     margin-top: 10px;
     border-radius: 4px;
+  }
+
+  button:hover{
+    fill: gray;
+    opacity: 0.7;
   }
   
   .shuttle{
