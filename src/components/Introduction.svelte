@@ -6,6 +6,7 @@
     export let index;
 
     let oringData = [];
+    let particles = "1348243-9bJ5LfzwGP-high_0004.avif";
 
     onMount(async () => {
         const res = await fetch('o-ring.csv'); 
@@ -15,6 +16,15 @@
 </script>
   
 <main>
+    {#if index == 0}
+    <div id="video-container" out:fade>
+        <img 
+        src={particles}
+        width="100%"
+        />
+    </div>
+    {/if}
+    
     {#if index == 1}
     <div id="video-container" out:fade>
         <video
@@ -40,7 +50,7 @@
         width: 100%;
         box-sizing: border-box;
         position: absolute;
-        animation: fadein 1000ms ease-in-out both;
+        animation: fadein 800ms ease-in-out both;
     }
 
     #text-container{

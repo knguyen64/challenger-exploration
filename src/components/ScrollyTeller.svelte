@@ -5,6 +5,7 @@
     import Trials1 from "./Trials1.svelte";
     import Trials2 from "./Trials2.svelte";
     import Orings from "./Orings.svelte";
+    import IceOrings from "./IceOrings.svelte";
     import Introduction from "./Introduction.svelte";    
     import * as d3 from 'd3';
 
@@ -18,11 +19,25 @@
     }
 
     $: if(index == 4 && mode == false){
+        // Change to light mode after introduction
+        toggle();
+        mode = true;
+      } else if(index == 13 && mode == true){
+        // Change to dark mode before takeaways
+        toggle();
+        mode = false;
+      } else if(index > 4 && index < 13 && mode == false){
+        // Change to light mode if return to section before takeaways
         toggle();
         mode = true;
       } else if(index < 4  && mode == true){
+        // Change to dark mode if return to introduction
         toggle();
         mode = false;
+      // } else if(index > 4  && index < 13 && mode == false){
+      //   // Change to light mode if after introduction and bug happens
+      //   toggle();
+      //   mode = true;
       }
     
 
@@ -111,15 +126,15 @@
       background-color: #FEFFF0;"
       >
         <div id=text-container style=" width: 70%; padding-left: 10%;padding-right: 10%;
-    ">
-    {#if index >= 5}
-          <p> A component in the shuttle’s boosters played a pivotal role in the disaster: the O-Rings.
-            <br/>
-            <br/>
-            O-rings are rubber gaskets used to seal off combustion in the tanks of the solid rocket boosters. If they malfunction, 
-            combustion gas releases from the motor and ignites the fuel tank.</p>
-            {/if}
-          </div>
+        ">
+          {#if index >= 5}
+          <p > A component in the shuttle’s boosters played a pivotal role in the disaster: the O-Rings.
+          <br/>
+          <br/>
+          O-rings are rubber gaskets used to seal off combustion in the tanks of the solid rocket boosters. If they malfunction, 
+          combustion gas releases from the motor and ignites the fuel tank.</p>
+          {/if}
+        </div>
         <div style="padding-left: 0; padding-right: 10%;">
           <Orings {index}/>  
         </div>
@@ -138,7 +153,7 @@
       {#if index >= 7}
         <Trials1 {index}/>
         <div id=text-container> 
-          <p>Looking at the launch trials alone, O-rings failed when launch temperatures were both low and high, seemingly suggesting
+          <p>Looking at the launch trials alone, O-rings failed when launch temperatures were both high and low, seemingly suggesting
             that temperature did not play a part in O-ring failure. 
             <br/> 
             <br/> 
@@ -148,7 +163,7 @@
       {/if}
     </section>
 
-    <section id="Information" style="padding-top: 10em;">
+    <section id="Information" style="padding-top: 10em; height: 110vh;">
       {#if index >= 8}
         <Trials2 {index}/>
         <div id=text-container style="display: block">
@@ -160,9 +175,18 @@
 
     <section id="Information">
       {#if index >= 9}
-      <div id=text-container>
-        <p>The elasticity of O-rings permits air-tight seals. However, at low temperatures O-rings become brittle. This allowed for air 
-        to escape which led to the burning of the fuel tank and subsequently, the disaster known today</p>
+      <div style="    display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #FEFFF0;">
+        <div id=text-container style=" width: 70%; padding-left: 10%;padding-right: 10%;
+        ">
+          <p>The elasticity of O-rings permits air-tight seals. However, at low temperatures O-rings become brittle. This allowed for air 
+          to escape which led to the burning of the fuel tank and subsequently, the disaster known today.</p>
+        </div>
+        <div style="padding-left: 0; padding-right: 10%;">
+          <IceOrings {index}/>  
+        </div>
       </div>
       {/if}
       </section>
@@ -182,9 +206,9 @@
       {/if}
     </section>
 
-    <section id="Information">
+    <section id="Information" style="background-color: #FEFFF0">
       {#if index >= 12}
-      <div id=text-container>
+      <div id=text-container >
         <p>As you run the simulation at 36°F repeatedly, the likelihood of a successful launch for the Challenger is put into perspective, 
           and the consequences of making such a decision. Unlike the simulation, the disaster had real impacts on individuals and their 
           loved ones. So…What can we learn from this?</p>  
@@ -192,9 +216,14 @@
       {/if}
     </section>
 
+    <section id="Information" style="rgb(254,255,240);
+    background: linear-gradient(180deg, rgba(254,255,240,1) 0%, rgba(236,237,223,1) 12%, rgba(220,221,208,1) 21%, rgba(203,204,192,1) 30%, rgba(0,0,0,1) 100%);    
+    ">
+    </section>
+
     <section id="Information">
-      {#if index >= 13}
-      <div id=text-container>
+      {#if index >= 14}
+      <div id=text-container style="color: #FEFFF0">
         <p>Extensive data analysis from different mediums, including visualization, is crucial to a robust assessment of success likelihood 
           and more importantly safety. Hazards can present themselves at any scale, so it is important to consider risks and take accountability for decisions.
         </p>
@@ -203,8 +232,8 @@
     </section>
 
     <section id="Information">
-      {#if index >= 14}
-      <div id=text-container>
+      {#if index >= 15}
+      <div id=text-container style="color: #FEFFF0">
         <p>In terms of the series of events leading to the Challenger’s disaster, the company behind the solid rocket boosters, Morton Thiokol, knew of the O-ring 
           issue. Thiokol along with several other key technicians including the engineers voiced their concerns, but the launch continued to take place. Perhaps, if 
           the management at NASA had acknowledged concerns and understood the true likelihood of the Challenger launching successfully, this tragedy could have played out differently.

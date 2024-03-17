@@ -8,13 +8,14 @@
   let oringData = [];
   let shuttleImage = "shuttle.png";
   let explosionImage = "explosion.png";
+  let infoBool = false;
 
   onMount(async () => {
       const res = await fetch('o-ring.csv'); 
       const csv = await res.text();
       oringData = d3.csvParse(csv, d3.autoType)
 
-      console.log(oringData);
+      // console.log(oringData);
   });
 
   // Inserts Slider
@@ -55,20 +56,88 @@
       prob = Math.floor(prob*100).toFixed(0)
       denom = '100,000'
     }
-    console.log(prob)
+    // console.log(prob)
   }
+
+  // Animation
+
+  // function update() {
+  //   if (exploded == 0){
+  //     d3.selectAll('img')
+  //     .transition()
+  //     // .delay(function(d,i){ return 0.1*i; }) 
+  //     // .duration(3000)
+  //     // .attr('style', "transform: translateY( "+ shuttleX + "px); opacity: 0%")
+  //     // .transition()
+  //     .duration(700)
+  //       .style('transform', "translateY( "+ shuttleX + "px)")
+  //       .transition("opacity")
+  //       .duration(200)
+  //       .style('opacity', "0%")
+  //       state = !state;
+
+  //   }
+  // }
+  let shuttle;
+  let shuttleX = -200;
+  let translated = false;
+
+  //Animation
+  $: if(exploded == 1 && !state){
+    // if explosion
+    d3.select(shuttle)
+      .attr("src", explosionImage)
+      .transition()
+      .style('opacity', "0%")
+  } else if(exploded == 0 && !state){
+    // if no explosion
+    d3.select(shuttle)
+      .style('opacity', "100%")
+      .transition()
+      .style('transform', "translateY( "+ shuttleX + "px)")
+      .style('opacity', "0%")
+    translated = true;
+  }else if(state){
+    // if no launch
+    d3.select(shuttle)
+      .attr("src", shuttleImage)
+      .style('opacity', "100%")
+
+    if(translated == true){
+      d3.select(shuttle)
+        .style('transform', null)
+      translated = false;
+    }
+  }
+
+  function getInfo(){
+    if (infoBool==true){
+      infoBool=false;
+    } else{
+      infoBool=true;
+    }
+  }
+
+  // $: console.log(d3.select('img').transition().style('transform', "translate(0," + 100 + "px)"))
 
 </script>
 
 <main>
   <div id="simulation-wrapper">
     <div id="intro">
-      <p style="margin-block-start: 0em;">Use the slider to select a temperature. Press "Launch" to start the simulation.</p>
+      <p style="margin-block-start: 0em;"><i>Use the slider to select a temperature. Press "Launch" to start the simulation.</i></p>
     </div>
     
     <div id="interactivity">
       <div id="interaction-box">
-        <p> Interaction </p>
+        <p style="display:inline"> Interaction </p> <button id="info" on:click={getInfo}> 
+          <div style="    display: flex; 
+          align-items: center;
+          justify-content: center;
+          transform: translatey(-2px);
+          font-size: 15px;"> 
+            <b>i</b> 
+          </div></button>
       </div> 
 
       <div class="slider">
@@ -93,14 +162,27 @@
         </button>
       </div>
       <br/>
+
+      {#if infoBool}
+        <div id="note" style="color: white; width: 90%">
+          <p> Slider Note: <br/> The slider range is based on the temperature history of Cape Canaveral, Florida(where the space shuttle was launched) in 1986.</p>
+          <p> Probability Note: <br/> The probability was calculated using logistic regression.</p>
+        </div>    
+      {/if}
     </div>
 
     <div id="simulation">
-      {#if state}
-        <img class="shuttle" src={shuttleImage} out:fly="{{ y: -300, duration: exploded == 0 ? 1200 : 0 }}"/>
-      {:else}
+      <!-- {#if state} -->
+        <img class="shuttle" bind:this={shuttle} src={shuttleImage}/>
+      <!-- {:else}
         <img class="explosion" src={explosionImage} in:fly="{{ y: 0, duration: exploded == 1 ? 1200 : 0 }}" style="opacity:{exploded == 1 ? "100" : "0" }" />
-      {/if}
+      {/if} -->
+      <!-- {#if state}
+        <img class="shuttle" src={shuttleImage}/>
+      {:else}
+        <img class="explosion" src={explosionImage}/>
+      {/if} -->
+
   
       <div id="probability">
         <p style="
@@ -111,13 +193,21 @@
       </div>  
     </div>
   </div>
-    
-  <div id="note">
-    <p> Note: The slider range is based on the temperature history of Cape Canaveral, Florida(where the space shuttle was launched) in 1986.</p>
-  </div>
 </main>
 
 <style>
+  #info{
+    height: 20px;
+    line-height: 20px;  
+    width: 20px;
+    border-radius: 50%;
+    text-align: center;
+    background-color: white;
+  }
+  #info:hover{
+    fill: gray;
+    opacity: 0.7;
+  }
   input[type="range"][orient=vertical]{
     width: 150px; 
     accent-color: red;
@@ -140,6 +230,9 @@
     background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
     border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
   }
 
   button[type="launch"]{
@@ -152,6 +245,7 @@
   .shuttle{
     transform: translate(0px, 80px);
     position: absolute;
+    transition: opacity .25s ease-in-out;
   }
 
   .explosion{
@@ -160,10 +254,10 @@
   }
 
   #simulation{
-    height: 80vh;
+    height: 85vh;
     width: 100%;
     text-align: center;
-    padding: 1em;
+    padding: 0em;
     margin: 0 0 0 0;
     background: rgb(11,61,145);
     background: linear-gradient(180deg, rgba(11,61,145,1) 0%, rgba(123,180,250,1) 100%);
@@ -180,7 +274,7 @@
 
   #intro{
     font-family: "Open Sans", sans-serif;
-    font-size: 23px;
+    font-size: 20px;
     margin: 0 0 0 0;
   }
 
@@ -188,6 +282,8 @@
     font-family: "Open Sans", sans-serif;
     color: white;
     background-color: rgba(0, 0, 0, 0.4);
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
   #probability{

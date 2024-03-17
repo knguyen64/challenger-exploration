@@ -87,6 +87,7 @@
 
     #left{
         position: absolute;
+        scale:0.85;
         left:0;
         max-width: 25%;
         animation: rightSlide 900ms ease-in;
@@ -94,6 +95,7 @@
 
     #right{
         position: absolute;
+        scale:0.85;
         right: 0;
         max-width: 25%;
         animation: leftSlide 900ms ease-in;
