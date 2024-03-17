@@ -7,8 +7,6 @@
 
 
     let oringData = [];
-    let shuttleShape = "shuttle_shape.png";
-    let oring = "Group_3-removebg-preview 1.png";
     let iceLaunch1 = "ice_launch.png";
     let iceLaunch2 = "ice_launch_2.png";
     let iceControl = "control_panel.png";
